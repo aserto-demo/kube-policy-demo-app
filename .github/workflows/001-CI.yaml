@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  POLICY_REPO: "apoland/"
+  POLICY_REPO: "apoland/policy-conftest"
   DOCKERHUB_REPO: "apoland/demo-app"
 
 jobs:
