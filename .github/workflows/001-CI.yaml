@@ -48,7 +48,7 @@ jobs:
           /tmp/policy pull $POLICY_REPO:latest
           /tmp/policy save $POLICY_REPO:latest -f - | tar -zxvf -
 
-      - name: Run conftest to check Dockerfile
+      - name: Test policy on Dockerfile
         run: |
           wget -q "https://github.com/open-policy-agent/conftest/releases/download/v0.29.0/conftest_0.29.0_Linux_x86_64.tar.gz"
           tar xzf conftest_0.29.0_Linux_x86_64.tar.gz
