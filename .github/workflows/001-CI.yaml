@@ -30,7 +30,7 @@ jobs:
         run: ./mvnw test
 
       - name: Run build
-        run: ./mvnw package && ls -la target
+        run: ./mvnw package
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
