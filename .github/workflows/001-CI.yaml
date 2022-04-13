@@ -42,6 +42,3 @@ jobs:
         run: |
           docker build . -t ${{ env.DOCKERHUB_REPO }}:latest
           docker push ${{ env.DOCKERHUB_REPO }}:latest
-
-      - name: Trigger Deploy
-        uses: apoland/hello-app/.github/workflows/002-CD.yaml@deploy
