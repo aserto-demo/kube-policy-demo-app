@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  DOCKERHUB_REPO: "apoland/hello-app"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,6 +40,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build . -t apoland/hello-app:latest
-          docker push apoland/hello-app:latest
+          docker build . -t ${{ env.DOCKERHUB_REPO }}:latest
+          docker push ${{ env.DOCKERHUB_REPO }}:latest
 
+      - name: Trigger Deploy
+        uses: apoland/hello-app/.github/workflows/002-CD.yaml@deploy

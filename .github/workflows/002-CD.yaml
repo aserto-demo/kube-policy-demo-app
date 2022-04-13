@@ -1,0 +1,19 @@
+name: CD
+
+on:
+  workflow_dispatch:
+
+env:
+  DOCKERHUB_REPO: "apoland/hello-app"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to kubernetes
+        run: |
+          echo kubectl apply -f k8s/
+
