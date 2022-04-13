@@ -9,6 +9,7 @@ on:
   workflow_dispatch:
 
 env:
+  POLICY_REPO: "apoland/"
   DOCKERHUB_REPO: "apoland/demo-app"
 
 jobs:
@@ -25,6 +26,30 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-m2-
+
+      - name: Install Policy CLI
+        run: |
+          wget -P /tmp "https://github.com/opcr-io/policy/releases/download/v0.1.26/policy0.1.26_linux_x86_64.zip"
+          cd /tmp && unzip policy0.1.26_linux_x86_64.zip 
+          chmod +x /tmp/policy
+
+      - name: Login to OPCR
+        run: |
+          echo ${{ secrets.POLICY_PASSWORD }} | /tmp/policy login -u ${{ secrets.POLICY_USERNAME }} --password-stdin
+          echo ${{ secrets.POLICY_PASSWORD }} | docker login opcr.io -u ${{ secrets.POLICY_USERNAME }} --password-stdin
+
+      - name: Check policy signature and pull policy
+        run: |
+          echo "$COSIGN_PUBLIC_KEY" >> cosign.pub
+          echo /tmp/cosign verify -key cosign.pub opcr.io/$POLICY_REPO:latest
+          /tmp/policy pull $POLICY_REPO:latest
+          /tmp/policy save $POLICY_REPO:latest - | tar -zxvf -
+
+      - name: Run conftest to check Dockerfile
+        run: |
+          wget "https://github.com/open-policy-agent/conftest/releases/download/v0.29.0/conftest_0.29.0_Linux_x86_64.tar.gz"
+          tar xzf conftest_0.29.0_Linux_x86_64.tar.gz
+          ./conftest test .
 
       - name: Run tests
         run: ./mvnw test
