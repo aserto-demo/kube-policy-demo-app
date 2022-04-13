@@ -1,5 +1,5 @@
 #FROM openjdk:17-alpine
-FROM amazoncorretto:17-alpines
+FROM amazoncorretto:17-alpine
 
 #RUN addgroup -S spring && adduser -S spring -G spring
 #RUN mkdir /app && chown spring:spring /app
