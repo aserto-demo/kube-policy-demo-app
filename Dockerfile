@@ -1,5 +1,7 @@
-#FROM openjdk:17-alpine
-FROM amazoncorretto:17-alpine
+FROM openjdk:17-alpine
+#FROM amazoncorretto:17-alpine
+
+RUN apk add --no-cache python3 python3-dev build-base && pip3 install awscli==1.18.1
 
 #RUN addgroup -S spring && adduser -S spring -G spring
 #RUN mkdir /app && chown spring:spring /app
