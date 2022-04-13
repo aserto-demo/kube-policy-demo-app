@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKERHUB_REPO: "apoland/hello-app"
+  DOCKERHUB_REPO: "apoland/demo-app"
 
 jobs:
   deploy:
@@ -18,7 +18,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Get GKE Credentials
+        uses: google-github-actions/get-gke-credentials@v0.2.1
+        with:
+          credentials: ${{ secrets.GCP_CREDENTIALS }}
+          cluster_name: cluster-1demo
+          location: us-central1-c
+
       - name: Deploy to kubernetes
         run: |
-          echo kubectl apply -f k8s/
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          ./kubectl get pods -A
 

@@ -7,6 +7,6 @@ FROM amazoncorretto:17-alpine
 RUN mkdir /app
 WORKDIR /app
 
-COPY target/hello-app-0.0.1-SNAPSHOT.jar /app
+COPY target/demo-app-0.0.1-SNAPSHOT.jar /app
 
-ENTRYPOINT ["java","-jar","hello-app-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","demo-app-0.0.1-SNAPSHOT.jar"]
