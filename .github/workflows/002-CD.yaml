@@ -54,7 +54,9 @@ jobs:
 
       - name: Apply latest policy to cluster
         run: |
-          kubectl apply -f policy/
+          cat policy/k8s_requiredlabels.rego | awk '{ print "        " $0 }' >> k8s/templates/k8srequiredlabels_template.yaml
+          kubectl apply -f k8s/templates/
+          kubectl apply -f k8s/constraints/
 
       - name: Deploy app to kubernetes
         run: |
