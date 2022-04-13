@@ -34,7 +34,7 @@ jobs:
       - name: Install Policy CLI
         run: |
           wget -q -P /tmp "https://github.com/opcr-io/policy/releases/download/v0.1.26/policy0.1.26_linux_x86_64.zip"
-          cd /tmp && unzip policy0.1.26_linux_x86_64.zip 
+          cd /tmp && unzip policy0.1.26_linux_x86_64.zip
           chmod +x /tmp/policy
 
       - name: Login to OPCR
