@@ -45,14 +45,14 @@ jobs:
       - name: Check policy signature
         run: |
           echo "$COSIGN_PUBLIC_KEY" >> cosign.pub
-          echo /tmp/cosign verify -key cosign.pub opcr.io/$POLICY_REPO:latest
+          echo /tmp/cosign verify -key cosign.pub opcr.io/$POLICY_REPO:1.0.0
 
       - name: Pull policy
         run: |
-          /tmp/policy pull $POLICY_REPO:latest
-          /tmp/policy save $POLICY_REPO:latest -f - | tar -zxvf -
+          /tmp/policy pull $POLICY_REPO:1.0.0
+          /tmp/policy save $POLICY_REPO:1.0.0 -f - | tar -zxvf -
 
-      - name: Apply latest policy to cluster
+      - name: Apply policy to cluster
         run: |
           cat policy/k8s_requiredlabels.rego | awk '{ print "        " $0 }' >> k8s/templates/k8srequiredlabels_template.yaml
           kubectl apply -f k8s/templates/

@@ -41,12 +41,12 @@ jobs:
       - name: Check policy signature
         run: |
           echo "$COSIGN_PUBLIC_KEY" >> cosign.pub
-          echo /tmp/cosign verify -key cosign.pub opcr.io/$POLICY_REPO:latest
+          echo /tmp/cosign verify -key cosign.pub opcr.io/$POLICY_REPO:1.0.0
 
       - name: Pull policy
         run: |
-          /tmp/policy pull $POLICY_REPO:latest
-          /tmp/policy save $POLICY_REPO:latest -f - | tar -zxvf -
+          /tmp/policy pull $POLICY_REPO:1.0.0
+          /tmp/policy save $POLICY_REPO:1.0.0 -f - | tar -zxvf -
 
       - name: Test policy on Dockerfile
         run: |
@@ -68,5 +68,5 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build . -t ${{ env.DOCKERHUB_REPO }}:latest
-          docker push ${{ env.DOCKERHUB_REPO }}:latest
+          docker build . -t ${{ env.DOCKERHUB_REPO }}:1.0.0
+          docker push ${{ env.DOCKERHUB_REPO }}:1.0.0
