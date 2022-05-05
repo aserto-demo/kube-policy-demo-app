@@ -40,7 +40,7 @@ jobs:
 
       - name: Check policy signature
         run: |
-          echo "$COSIGN_PUBLIC_KEY" >> cosign.pub
+          echo "$COSIGN_PUBLIC_KEY" > cosign.pub
           echo /tmp/cosign verify -key cosign.pub opcr.io/$POLICY_REPO:1.0.0
 
       - name: Pull policy
