@@ -1,5 +1,4 @@
 FROM openjdk:17-alpine
-#FROM amazoncorretto:17-alpine
 
 RUN mkdir /app
 WORKDIR /app
